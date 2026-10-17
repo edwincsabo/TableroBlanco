@@ -1,0 +1,10 @@
+import {readFile,writeFile} from 'node:fs/promises';
+const version=process.argv[2];
+if(!/^\d+\.\d+\.\d+$/.test(version||''))throw new Error('Indica una versión x.y.z.');
+const manifest=JSON.parse(await readFile('package.json','utf8'));
+const lock=JSON.parse(await readFile('package-lock.json','utf8'));
+manifest.version=version;manifest.build.directories.output=`version-final/${version}`;
+lock.version=version;lock.packages[''].version=version;
+await writeFile('package.json',JSON.stringify(manifest,null,2)+'\n');
+await writeFile('package-lock.json',JSON.stringify(lock,null,2)+'\n');
+console.log(`TableroBlanco ${version}`);

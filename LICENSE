@@ -1,0 +1,70 @@
+TableroBlanco No-Sale License 1.0
+Copyright (c) 2026 edwincsabo and TableroBlanco contributors
+
+1. Scope
+
+This license applies to the original TableroBlanco code and documentation
+distributed with this notice (the Covered Software). Third-party software,
+fonts and other separately licensed materials are excluded and remain subject
+to their own licenses. See THIRD_PARTY_NOTICES.md and licenses/.
+
+2. Permission
+
+Subject to these conditions, you may use, copy, study, modify and redistribute
+the Covered Software, in source or executable form, for personal, educational,
+organizational and commercial purposes. Internal business use is permitted.
+You may provide paid professional services, including support, training,
+installation, customization, consulting, maintenance and hosting services.
+You may charge for a hosted service that uses the Covered Software without
+transferring a paid copy or paid software license to the customer.
+
+3. No sale of the software
+
+You may not sell copies of the Covered Software, sell software licenses for
+it, or charge for the right to receive, download, install or use a distributed
+copy of it. This restriction also applies to modified versions and derivative
+works containing Covered Software, whether distributed alone or in a bundle.
+Redistribution of copies of the Covered Software must be free of charge.
+
+The permitted service fees described in section 2 are not a sale of the
+software. A customer may pay for actual customization or another professional
+service and receive the resulting software copy without a separate software
+price. Merely relabeling a software price as a service fee does not satisfy
+this license. Nothing in this section restricts the independent exercise of
+rights granted by a third-party license for separately licensed material.
+
+4. Notices and modified versions
+
+Every redistributed copy of Covered Software must include this license and
+the applicable copyright and third-party notices. Modified versions must
+identify that they have been modified and must preserve these permissions and
+the no-sale condition for Covered Software and derivative versions containing
+it. This license does not require publication of private modifications and
+does not apply to independent software that contains no Covered Software.
+It grants no right to claim endorsement by the original author or by Microsoft.
+
+5. Other licenses and prior copies
+
+This license grants only rights the licensors can grant. It does not replace
+the licenses of dependencies, grant rights in Microsoft products, or revoke
+permissions already granted for earlier copies under a different license.
+Copies previously supplied under MIT retain the permissions of that license.
+
+6. No warranty or liability
+
+To the maximum extent permitted by applicable law, the Covered Software is
+provided as is, without any warranty, including merchantability, fitness for
+a particular purpose, title or non-infringement. The licensors and contributors
+are not liable for damages or other liability arising from the Covered Software
+or its use, whether in contract, tort or otherwise.
+
+7. Termination
+
+Your permission under this license ends if you breach its conditions. After
+written notice of a breach, permission is reinstated if you remedy the breach
+within 30 days and take reasonable steps to correct its consequences. Rights
+under separate third-party licenses are not terminated by this provision.
+
+This is a project-specific source-available license, not an OSI-approved
+open-source license. The English text of this LICENSE is authoritative;
+docs/LICENCIA.es.md is a plain-language explanation, not a replacement.

@@ -1,0 +1,68 @@
+name: Publicar Windows
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Etiqueta que coincide con package.json (por ejemplo v1.2.1)
+        required: true
+        default: v1.2.1
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Verificar versión
+        shell: pwsh
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          $version = node -p "require('./package.json').version"
+          if ($env:RELEASE_TAG -ne "v$version") { throw 'La etiqueta no coincide con package.json' }
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: Pruebas de interfaz
+        run: npm run test:ui
+      - run: node scripts/prepare-desktop.mjs
+      - run: npx electron-builder --win nsis portable --x64
+      - name: Comprobar el paquete de Windows
+        shell: pwsh
+        run: |
+          $version = node -p "require('./package.json').version"
+          $env:TABLERO_EXECUTABLE = (Resolve-Path "version-final/$version/win-unpacked/TableroBlanco.exe").Path
+          npm run test:ui
+          if ($LASTEXITCODE -ne 0) { throw 'Fallaron las pruebas del paquete de Windows' }
+      - name: Crear hashes y publicar
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          $version = node -p "require('./package.json').version"
+          $folder = Join-Path 'version-final' $version
+          $assets = @(Get-ChildItem -LiteralPath $folder -Filter '*.exe' -File)
+          if ($assets.Count -ne 2) { throw 'Falta el instalador o el portable' }
+          $checksumPath = Join-Path $folder 'SHA256SUMS.txt'
+          $assets | ForEach-Object {
+            $hash = Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256
+            '{0}  {1}' -f $hash.Hash.ToLower(), $_.Name
+          } | Set-Content -LiteralPath $checksumPath -Encoding ascii
+          $uploads = @($assets.FullName) + @($checksumPath, 'LICENSE', 'THIRD_PARTY_NOTICES.md')
+          gh release create $env:RELEASE_TAG @uploads --target $env:GITHUB_SHA --title "TableroBlanco $version" --notes-file 'docs/RELEASE-NOTES.md' --prerelease
+          if ($LASTEXITCODE -ne 0) { throw 'No se pudo publicar la release' }

@@ -1,0 +1,25 @@
+import {test,expect,_electron as electron} from '@playwright/test';
+import path from 'node:path';
+import fs from 'node:fs/promises';
+const apps:any[]=[];
+test.afterEach(async()=>{for(const app of apps.splice(0))await app.close().catch(()=>{});});
+async function start(folder:string){const app=await electron.launch({args:['.'],env:{...process.env,TABLERO_TEST_DATA:folder,ELECTRON_RUN_AS_NODE:undefined} as any});apps.push(app);return {app,page:await app.firstWindow()};}
+test('selector de tres idiomas, catálogo traducido, preferencia persistente y contenido intacto',async()=>{
+  const folder=path.resolve('.local-test',`language-${Date.now()}`);await fs.mkdir(folder,{recursive:true});
+  const {app,page}=await start(folder);const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));
+  await page.getByRole('button',{name:'Configuración',exact:true}).first().click();
+  const spanish=page.getByLabel('Idioma de la aplicación');await expect(spanish.locator('option')).toHaveCount(3);await spanish.selectOption('en');
+  await expect(page.locator('html')).toHaveAttribute('lang','en');await expect(page.getByRole('dialog',{name:'Your workspace, your way'})).toBeVisible();await page.getByRole('button',{name:'Close',exact:true}).click();
+  await page.getByRole('button',{name:'Templates',exact:true}).click();await page.getByRole('button',{name:'Category Learning',exact:true}).click();await expect(page.locator('.catalog-card')).toHaveCount(9);await expect(page.getByRole('button',{name:'Use template Compare and contrast',exact:true})).toBeVisible();
+  await page.getByRole('button',{name:'Use template Compare and contrast',exact:true}).click();await expect(page.getByLabel('Board name')).toHaveValue('Compare and contrast');
+  await page.getByRole('button',{name:'Sticky notes',exact:true}).click();await page.getByLabel('Note content').fill('Mi texto original: English 中文');await page.getByRole('button',{name:'Add note',exact:true}).click();await page.getByRole('button',{name:'Close panel',exact:true}).click();
+  await page.getByLabel('Application language').selectOption('zh-CN');await expect(page.locator('html')).toHaveAttribute('lang','zh-CN');await expect(page.getByLabel('白板名称')).toHaveValue('Compare and contrast');await expect(page.getByRole('button',{name:'便签',exact:true})).toBeVisible();
+  await page.getByRole('button',{name:'搜索此白板',exact:true}).click();await page.getByLabel('搜索画布文本').fill('Mi texto original');await expect(page.getByText('1条结果',{exact:true})).toBeVisible();await page.getByRole('button',{name:'关闭面板',exact:true}).click();
+  await page.getByRole('button',{name:'模板',exact:true}).click();const dialog=page.getByRole('dialog',{name:'从结构开始'});await dialog.getByRole('button',{name:'分类：所有模板',exact:true}).click();await expect(dialog.locator('.catalog-card')).toHaveCount(57);const translated=await dialog.locator('.catalog-card').evaluateAll(cards=>cards.every(card=>/[\u3400-\u9fff]/.test(card.querySelector('strong')?.textContent||'')&&/[\u3400-\u9fff]/.test(card.querySelector('p')?.textContent||'')&&/[\u3400-\u9fff]/.test(card.querySelector('svg.template-scene-preview')?.textContent||'')));expect(translated).toBe(true);await dialog.getByRole('button',{name:'分类：学习',exact:true}).click();await expect(dialog.getByRole('button',{name:'使用模板：比较与对照',exact:true})).toBeVisible();await page.screenshot({path:'.local-test/07-chino-mandarin.png',fullPage:true});await dialog.getByRole('button',{name:'使用模板：5W1H分析法',exact:true}).click();
+  await page.getByRole('button',{name:'搜索此白板',exact:true}).click();await page.getByLabel('搜索画布文本').fill('发生了什么');await expect(page.getByText('1条结果',{exact:true})).toBeVisible();await page.getByRole('button',{name:'关闭面板',exact:true}).click();await page.getByRole('button',{name:'返回我的白板',exact:true}).click();
+  await app.close();const reopened=await start(folder);await expect(reopened.page.locator('html')).toHaveAttribute('lang','zh-CN');await reopened.page.getByRole('button',{name:'打开Compare and contrast',exact:true}).click();await reopened.page.getByLabel('应用语言').selectOption('es');await expect(reopened.page.getByLabel('Nombre del tablero')).toHaveValue('Compare and contrast');
+  await reopened.page.getByRole('button',{name:'Buscar en el tablero',exact:true}).click();await reopened.page.getByLabel('Buscar texto en lienzo').fill('Mi texto original');await expect(reopened.page.getByText('1 resultados',{exact:true})).toBeVisible();
+  await reopened.page.getByRole('button',{name:'Cerrar panel',exact:true}).click();await reopened.page.getByRole('button',{name:'Volver a mis tableros',exact:true}).click();
+  const names=await fs.readdir(path.join(folder,'tableros'));const boards=await Promise.all(names.filter(name=>name.endsWith('.json')).map(async name=>JSON.parse(await fs.readFile(path.join(folder,'tableros',name),'utf8'))));const board=boards.find(b=>b.name==='Compare and contrast');expect(board.scene.elements.some((e:any)=>e.originalText==='Mi texto original: English 中文')).toBe(true);expect(board.scene.elements.some((e:any)=>e.text?.includes('发生了什么'))).toBe(true);
+  expect(errors).toEqual([]);
+});

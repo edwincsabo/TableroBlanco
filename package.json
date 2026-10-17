@@ -1,0 +1,101 @@
+{
+  "name": "tableroblanco",
+  "version": "1.2.1",
+  "private": true,
+  "description": "Tablero personal para Windows: dibujo, ideas y documentos sin conexión.",
+  "author": "edwincsabo",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "desktop": "electron .",
+    "dist": "npm run build && node scripts/prepare-desktop.mjs && electron-builder --win nsis portable --x64",
+    "test": "node --test tests/*.test.cjs",
+    "test:ui": "playwright test"
+  },
+  "dependencies": {
+    "@excalidraw/excalidraw": "0.18.1",
+    "idb-keyval": "6.2.2",
+    "jspdf": "^3.0.4",
+    "lucide-react": "^0.468.0",
+    "pdfjs-dist": "6.4.299",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^5.0.4",
+    "electron": "44.9.0",
+    "electron-builder": "26.15.3",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12"
+  },
+  "build": {
+    "appId": "com.tableroblanco.desktop",
+    "productName": "TableroBlanco",
+    "directories": {
+      "output": "version-final/1.2.1",
+      "app": "desktop-bundle"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md",
+      "build/icon.*",
+      "licenses/**/*",
+      "!**/node_modules/**/*",
+      "shared/**/*"
+    ],
+    "asar": true,
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "signExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "deleteAppDataOnUninstall": false,
+      "installerLanguages": [
+        "es_ES",
+        "en_US",
+        "zh_CN"
+      ],
+      "artifactName": "TableroBlanco-${version}-Instalador.exe",
+      "displayLanguageSelector": true
+    },
+    "fileAssociations": [
+      {
+        "ext": "tablero",
+        "name": "TableroBlanco",
+        "role": "Editor"
+      }
+    ],
+    "portable": {
+      "artifactName": "TableroBlanco-${version}-Portable.exe"
+    },
+    "npmRebuild": false,
+    "electronDist": "node_modules/electron/dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edwincsabo/TableroBlanco.git"
+  },
+  "homepage": "https://github.com/edwincsabo/TableroBlanco",
+  "bugs": {
+    "url": "https://github.com/edwincsabo/TableroBlanco/issues"
+  }
+}

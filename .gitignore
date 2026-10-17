@@ -1,0 +1,16 @@
+node_modules/
+dist/
+version-final/
+test-results/
+playwright-report/
+.local-test/
+desktop-bundle/
+
+.env
+.env.*
+*.log
+Thumbs.db
+.DS_Store
+*.pem
+*.pfx
+*.key
