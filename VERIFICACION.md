@@ -1,5 +1,11 @@
 # Verificación de TableroBlanco 1.2.0
 
+## Preparación de la primera publicación, 1.2.1
+
+El 17 de octubre de 2026 se corrigieron dependencias señaladas por la auditoría, incluida jsPDF. Después del cambio pasaron la compilación, las cuatro pruebas de almacenamiento/geometría y las siete pruebas de interfaz con Electron oficial. `npm audit --omit=dev` informó cero vulnerabilidades conocidas en producción. La validación y publicación en GitHub Actions se puede consultar en [Actions](https://github.com/edwincsabo/TableroBlanco/actions).
+
+La edición 1.2.1 usa la licencia de publicación específica del proyecto. El siguiente informe conserva el contexto de la base funcional 1.2.0 y de su restricción local de Device Guard.
+
 Fecha de entrega: 17 de octubre de 2026. Plataforma verificada: Windows x64.
 
 ## Resultado

@@ -14,4 +14,4 @@ No se necesita Node.js para usar los ejecutables. Esta es una publicación preli
 
 El código propio utiliza TableroBlanco No-Sale License 1.0: permite uso empresarial y servicios comerciales, y prohíbe la venta del programa o de versiones modificadas que contengan su código. Los componentes de terceros conservan sus licencias. Lee LICENSE antes de redistribuir.
 
-La versión 1.2.1 introduce la licencia de publicación y la documentación del repositorio, sin añadir nuevas funciones frente a 1.2.0. Los paquetes locales anteriores conservan MIT.
+La versión 1.2.1 introduce la licencia de publicación y la documentación del repositorio, y actualiza dependencias para corregir los avisos de seguridad detectados antes de distribuirla. No añade nuevas funciones frente a 1.2.0. Los paquetes locales anteriores conservan MIT.

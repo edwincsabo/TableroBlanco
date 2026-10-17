@@ -34,12 +34,14 @@ jobs:
           $version = node -p "require('./package.json').version"
           if ($env:RELEASE_TAG -ne "v$version") { throw 'La etiqueta no coincide con package.json' }
       - run: npm ci
+      - name: Revisar dependencias de producción
+        run: npm audit --omit=dev --audit-level=high
       - run: npm test
       - run: npm run build
       - name: Pruebas de interfaz
         run: npm run test:ui
       - run: node scripts/prepare-desktop.mjs
-      - run: npx electron-builder --win nsis portable --x64
+      - run: npx electron-builder --win nsis portable --x64 --publish never
       - name: Comprobar el paquete de Windows
         shell: pwsh
         run: |
