@@ -4,9 +4,9 @@ Pizarra personal para Windows x64. Dibuja, organiza ideas, utiliza plantillas y 
 
 **Español · English · 中文（简体）**
 
-[Descargar para Windows](https://github.com/edwincsabo/TableroBlanco/releases) · [Guía de uso](docs/GUIA.md) · [Licencia](LICENSE) · [Contribuir](CONTRIBUTING.md)
+[Descargar para Windows](https://github.com/edwincsabo/TableroBlanco/releases) · [Guía de uso](docs/GUIA.md) · [Capturas de pantalla](docs/CAPTURAS.md) · [Licencia](LICENSE) · [Contribuir](CONTRIBUTING.md)
 
-![Biblioteca de plantillas de TableroBlanco](docs/images/plantillas.png)
+![Pantalla principal de TableroBlanco: biblioteca de tableros y acceso a plantillas](docs/images/inicio.png)
 
 ## Descargar e instalar
 
@@ -31,6 +31,14 @@ La publicación inicial es preliminar y los ejecutables no tienen firma digital 
 - Copias de seguridad completas e importación de `.tablero` y `.excalidraw`.
 - Exportación editable `.tablero`, PNG, SVG y PDF.
 - Interfaz en español, inglés y chino simplificado, con preferencia de idioma persistente.
+
+## El editor
+
+Un lienzo para escribir, dibujar y conectar ideas. Las herramientas de dibujo están en la barra superior; la barra inferior permite insertar notas, imágenes, documentos, plantillas y otros elementos.
+
+![Editor de TableroBlanco con notas adhesivas, texto y herramientas de dibujo](docs/images/editor.png)
+
+Puedes ver también las plantillas, el tema oscuro y la interfaz en chino en la [galería de capturas](docs/CAPTURAS.md).
 
 ## Plantillas
 
