@@ -1,54 +1,33 @@
-# Verificación de TableroBlanco 1.3.0
+# Verificación de TableroBlanco 1.4.0
 
-Versión con selección de carpeta para la biblioteca, migración verificada, detección de cambios externos, copias por conflicto y recuperación local. La revisión local se realizó el 18 de octubre de 2026 con perfiles de demostración, sin cambiar la ubicación de los tableros personales del usuario.
+Versión con IA opcional para resumir texto seleccionado y proponer tareas mediante OpenAI, OpenRouter o Claude. Las pruebas utilizan claves ficticias y transportes simulados; no se han usado claves personales ni consumido créditos reales de proveedores.
 
-## Comprobación local
+## Verificación local
 
 - TypeScript y compilación Vite: correctos.
-- Almacenamiento, migración y geometría: 12 pruebas correctas.
-- Interfaz con el runtime oficial de Electron: nueve pruebas correctas.
+- Lógica, almacenamiento, migración, geometría e IA: 27 pruebas correctas.
+- Interfaz con el runtime oficial de Electron: 11 pruebas correctas.
+- Instalador NSIS y portable para Windows x64: generados correctamente.
 - Auditoría de dependencias de producción: cero vulnerabilidades conocidas en la consulta realizada para esta versión.
-- Generación local del instalador NSIS y del portable para Windows x64: correcta.
-- Documentación en español, inglés y chino simplificado: enlaces locales y comandos de desarrollo comprobados.
 
-Las pruebas de carpeta sincronizada también se ejecutan con una ventana estrecha, comprobando que el indicador de guardado sigue visible. La prueba de idiomas respeta TABLERO_EXECUTABLE, igual que los otros casos.
+Un bloqueo temporal del servicio de revisión automática impidió los primeros intentos de ejecutar Electron. Tras reintentarlo por la misma vía autorizada, la suite local completa terminó correctamente. No se eludieron revisiones ni se modificaron las protecciones del equipo.
 
-## Cobertura de la función de carpetas
+La comprobación de interfaz y del ejecutable empaquetado se realizará en el flujo de GitHub Actions antes de publicar las descargas. Este informe se actualizará con su resultado. No se presenta una respuesta simulada como una llamada real al proveedor.
 
-Las pruebas comprobaron copia de tableros e historial, conservación del origen, unión con una biblioteca de destino, conflictos de identificadores, persistencia de la ubicación tras reiniciar, revisión obsoleta, borrado externo, carpeta desconectada, recuperación local y conservación de archivos ilegibles. También verificaron que las carpetas solapadas se rechazan, que una configuración dañada no activa otra biblioteca y que un fallo al confirmar la configuración mantiene el origen activo.
+## Cobertura de IA
 
-En la interfaz se comprobaron selección y confirmación de carpeta, cancelación sin cambios, aviso de modificación externa sin reemplazar el lienzo, creación de una copia por conflicto, continuación de la edición en esa copia, llegada de un tablero externo, desconexión y reconexión y los controles en inglés y chino. Se conservaron las pruebas de dibujo, notas, plantillas, exportación, PDF, copias de seguridad y recuperación tras reiniciar.
+Se comprobaron desactivación inicial, bloqueo sin clave o activación, confirmación de envío, revisión de configuración para no cambiar silenciosamente de proveedor, cifrado y ausencia de claves en el estado público, eliminación de credenciales y persistencia al reiniciar. Los contratos de solicitud de los tres proveedores verifican endpoints, cabeceras, formato estructurado y envío exclusivo de los textos recibidos.
 
-## Paquete publicado
+También se comprobaron límites de entrada, respuestas inválidas o truncadas, referencias inexistentes, errores de autenticación y uso sin revelar cuerpos del proveedor, ausencia de reintentos automáticos, cancelación inmediata y durante la solicitud, exclusión de texto no seleccionado y creación de objetos nuevos sin modificar los originales.
 
-La [ejecución final de GitHub Actions](https://github.com/edwincsabo/TableroBlanco/actions/runs/39193858185) terminó correctamente el 18 de octubre de 2026 en horario de Colombia (19 de octubre en UTC), con el código del commit `387ed8ffba4eb76d6d2294ecf5bb90b6e0964545`.
-
-- Dependencias de producción: cero vulnerabilidades conocidas en la auditoría de esa ejecución.
-- Almacenamiento, migración y geometría: 12 pruebas correctas.
-- Interfaz con Electron oficial: nueve pruebas correctas.
-- Empaquetado del instalador y del portable: correcto.
-- Interfaz con el ejecutable empaquetado: nueve pruebas correctas, incluida la selección de carpeta y los tres idiomas.
-- [Release v1.3.0](https://github.com/edwincsabo/TableroBlanco/releases/tag/v1.3.0): publicada como preliminar, con instalador, portable, licencia, avisos de terceros y hashes.
-- Descargas públicas del instalador y del portable: HTTP 200. Los valores de SHA256SUMS.txt coinciden con los digests de los archivos publicados por GitHub.
-
-Una ejecución anterior detectó que el diseño compacto ocultaba el indicador de guardado. Se corrigió y se repitió el flujo completo; el resultado indicado corresponde a la ejecución final.
+Los casos de interfaz cubren configuración con una clave ficticia cifrada por Windows, selección limitada, vista previa editable, descarte de tareas, inserción, reinicio, eliminación de claves, errores y los controles en los tres idiomas. Se conservan las pruebas de pizarra, plantillas, documentos y carpetas sincronizadas.
 
 ## Límites
 
-Los cambios de otros equipos y la desconexión se simularon mediante archivos y carpetas locales. No se inició sesión en cuentas personales ni se certificó una transferencia real con OneDrive, Google Drive u otro proveedor. El cliente externo debe permitir lectura y escritura normal, tener permisos y espacio suficiente y mantener la carpeta disponible sin conexión.
+Los adaptadores siguen la documentación oficial consultada para esta versión, con respuestas simuladas representativas. No se certifica el acceso de una cuenta particular, la disponibilidad de todos los modelos, el precio del proveedor ni la exactitud de los resúmenes. Un modelo debe admitir el formato estructurado utilizado por su API. La validación del JSON no demuestra que las tareas propuestas sean correctas.
 
-La comprobación de revisiones reduce sobrescrituras, pero no constituye un bloqueo distribuido ni una combinación automática de dibujos. No se garantiza resolver todas las carreras entre clientes de sincronización. El indicador de guardado confirma una escritura local y no el fin de una subida a la nube.
+Las claves se protegen con Electron safeStorage para el usuario de Windows y quedan fuera de los datos de los tableros. Esto no protege contra aplicaciones maliciosas que se ejecuten con ese mismo usuario. Las condiciones de tratamiento y retención del texto dependen del proveedor; store: false no es una garantía de retención cero.
 
-Los ejecutables no tienen firma digital comercial. Una política de Device Guard bloqueó una compilación local anterior; no se modificaron las protecciones del equipo. No se ejecutó el instalador sobre el perfil personal ni se verificaron todos los dispositivos táctiles o lápices digitales. La revisión lingüística no fue realizada por un asesor externo.
+La sincronización de carpetas se comprueba mediante archivos y cambios simulados, sin acceso a cuentas personales. Los ejecutables permanecen sin firma digital comercial. No se cambian las protecciones del equipo ni se ejecuta el instalador sobre el perfil personal del usuario.
 
-## Repetir las pruebas
-
-```powershell
-npm ci
-npm test
-npm run build
-npm run test:ui
-npm run dist
-```
-
-Las pruebas de interfaz aceptan TABLERO_EXECUTABLE con la ruta al ejecutable extraído. El [informe de la versión 1.2.1](docs/VERIFICACION-1.2.1.md) conserva la verificación de la primera publicación pública.
+Consulta la [guía de IA](docs/IA.es.md), la [guía de carpetas sincronizadas](docs/SINCRONIZACION.md) y el [informe de la versión 1.3.0](docs/VERIFICACION-1.3.0.md).

@@ -1,9 +1,10 @@
-const { app, BrowserWindow, ipcMain, dialog, shell, protocol, net, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, shell, protocol, net, Menu, safeStorage } = require('electron');
 const path = require('node:path');
 const fs = require('node:fs/promises');
 const { pathToFileURL } = require('node:url');
 const { createLibrary } = require('./library.cjs');
 const { randomUUID } = require('node:crypto');
+const { createAIService } = require('./ai.cjs');
 const messages = require('../shared/ui.json');
 let language = 'es';
 function translate(text) { return language === 'es' ? text : messages[text]?.[language === 'en' ? 0 : 1] || text; }
@@ -23,6 +24,16 @@ async function openDocument(file) {
   catch (e) { dialog.showErrorBox(translate('No se pudo abrir el tablero'), e.message); }
 }
 app.whenReady().then(async () => {
+  const ai = createAIService(app.getPath('userData'), {safeStorage,translate});
+  const aiHandler = handler => (event,...args) => {
+    if(!window || event.sender!==window.webContents || event.senderFrame!==window.webContents.mainFrame)throw new Error(translate('Solicitud de IA no válida.'));
+    return handler(...args);
+  };
+  ipcMain.handle('ai:info',aiHandler(()=>ai.info()));
+  ipcMain.handle('ai:save',aiHandler(input=>ai.save(input)));
+  ipcMain.handle('ai:forget',aiHandler(provider=>ai.forget(provider)));
+  ipcMain.handle('ai:analyze',aiHandler(payload=>ai.analyze(payload)));
+  ipcMain.handle('ai:cancel',aiHandler(id=>ai.cancel(id)));
   let library; let initializationError; let folderProposal = null;
   try { library = await createLibrary(app.getPath('userData'), translate); }
   catch (error) { initializationError = error; }
@@ -79,7 +90,7 @@ app.whenReady().then(async () => {
     const file = pendingOpen; pendingOpen = null;
     return file ? fs.readFile(file, 'utf8') : null;
   });
-  ipcMain.handle('app:closeReady', async () => {await library?.idle().catch(()=>{});closeApproved = true; window.close();});
+  ipcMain.handle('app:closeReady', async () => {ai.cancel();await ai.idle().catch(()=>{});await library?.idle().catch(()=>{});closeApproved = true; window.close();});
   ipcMain.handle('app:external', (_event, url) => { if (/^https?:\/\//i.test(url)) return shell.openExternal(url); });
   window = new BrowserWindow({width:1440,height:940,minWidth:1000,minHeight:680,backgroundColor:'#f7f9f8',title:'TableroBlanco',icon:path.join(__dirname,'../build/icon.ico'),webPreferences:{preload:path.join(__dirname,'preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true}});
   Menu.setApplicationMenu(null);

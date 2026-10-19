@@ -1,6 +1,6 @@
 {
   "name": "tableroblanco",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "private": true,
   "description": "Tablero personal para Windows: dibujo, ideas y documentos sin conexión.",
   "author": "edwincsabo",
@@ -39,7 +39,7 @@
     "appId": "com.tableroblanco.desktop",
     "productName": "TableroBlanco",
     "directories": {
-      "output": "version-final/1.3.0",
+      "output": "version-final/1.4.0",
       "app": "desktop-bundle"
     },
     "files": [

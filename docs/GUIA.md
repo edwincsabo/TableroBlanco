@@ -1,13 +1,13 @@
-# TableroBlanco 1.3.0
+# TableroBlanco 1.4.0
 
 Aplicación de pizarra personal para Windows x64. Funciona sin cuentas, sin servidor y sin conexión. Los tableros se guardan en el equipo. Es una alternativa independiente inspirada en los flujos de trabajo de Whiteboard; no es un producto de Microsoft ni una reproducción idéntica.
 
 ## Abrir la aplicación
 
-En `version-final/1.3.0`:
+En `version-final/1.4.0`:
 
-- `TableroBlanco-1.3.0-Instalador.exe`: instala para el usuario actual, permite elegir carpeta y crea accesos en Inicio y el escritorio.
-- `TableroBlanco-1.3.0-Portable.exe`: ejecuta la aplicación sin instalarla. Los datos se guardan en el perfil del usuario o en la biblioteca elegida en Configuración, no junto al ejecutable.
+- `TableroBlanco-1.4.0-Instalador.exe`: instala para el usuario actual, permite elegir carpeta y crea accesos en Inicio y el escritorio.
+- `TableroBlanco-1.4.0-Portable.exe`: ejecuta la aplicación sin instalarla. Los datos se guardan en el perfil del usuario o en la biblioteca elegida en Configuración, no junto al ejecutable.
 - `win-unpacked/TableroBlanco.exe`: versión ya extraída. Conserva toda la carpeta `win-unpacked` si la trasladas.
 
 No necesitas instalar Node.js, npm, Electron ni un navegador para usar los ejecutables. Son compilaciones sin firma digital comercial; Windows puede mostrar el editor como desconocido.
@@ -63,6 +63,12 @@ Aprendizaje incluye **5 W y un H**, **Lluvia de ideas para aprender**, **Compara
 La búsqueda recorre todas las categorías y las plantillas personales, sin distinguir mayúsculas ni tildes. **Mis plantillas** muestra los diseños guardados desde Opciones del tablero. Los juegos son tableros editables para actividades, sin reglas automáticas ni un sistema de jugadores.
 
 Los diseños son propios e inspirados en estructuras de trabajo conocidas y en la referencia proporcionada. No se afirma que sean reproducciones exactas de las plantillas de Microsoft. La aplicación mantiene el mismo almacenamiento local que la versión 1.0.0; los ejecutables anteriores se conservan en la raíz de `version-final`.
+
+## IA opcional
+
+Desde **Configuración → Inteligencia artificial opcional** configura OpenAI, OpenRouter o Claude con un modelo compatible y tu propia clave de API. Está desactivada por defecto. Selecciona notas o textos en el lienzo, abre **Resumir y proponer tareas**, revisa el contenido y confirma **Enviar y analizar**. Edita el resumen y las tareas antes de insertarlos como nuevas tarjetas. Las notas originales se conservan.
+
+Las claves quedan cifradas en el perfil de Windows, fuera de la biblioteca y los respaldos. La API requiere internet y puede generar cargos. Consulta la [guía de IA](IA.es.md) para los detalles de privacidad, límites, errores y eliminación de claves.
 
 ## Guardado y recuperación
 

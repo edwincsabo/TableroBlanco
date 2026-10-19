@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "summary": {"type": "string"},
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {"type": "string"},
+          "details": {"type": "string"},
+          "kind": {"type": "string", "enum": ["explicit", "suggested"]},
+          "sourceIds": {"type": "array", "items": {"type": "string"}}
+        },
+        "required": ["title", "details", "kind", "sourceIds"]
+      }
+    },
+    "questions": {"type": "array", "items": {"type": "string"}}
+  },
+  "required": ["summary", "tasks", "questions"]
+}

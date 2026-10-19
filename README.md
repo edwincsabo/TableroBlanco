@@ -14,10 +14,10 @@ La aplicación está disponible en español, inglés y chino simplificado.
 
 1. Abre [Releases](https://github.com/edwincsabo/TableroBlanco/releases).
 2. En la versión que quieras utilizar, despliega **Assets**.
-3. Descarga `TableroBlanco-1.3.0-Instalador.exe` o el instalador correspondiente a esa versión.
+3. Descarga `TableroBlanco-1.4.0-Instalador.exe` o el instalador correspondiente a esa versión.
 4. Cierra una instancia anterior de TableroBlanco y ejecuta el instalador. Puedes elegir la carpeta y crear accesos directos.
 
-Si prefieres utilizarla sin instalar, descarga `TableroBlanco-1.3.0-Portable.exe`. Por defecto, los tableros se guardan en el perfil del usuario de Windows, también al usar la versión portable; puedes elegir otra carpeta desde Configuración. No necesitas Node.js, npm ni Electron para utilizar estos ejecutables.
+Si prefieres utilizarla sin instalar, descarga `TableroBlanco-1.4.0-Portable.exe`. Por defecto, los tableros se guardan en el perfil del usuario de Windows, también al usar la versión portable; puedes elegir otra carpeta desde Configuración. No necesitas Node.js, npm ni Electron para utilizar estos ejecutables.
 
 La publicación inicial es preliminar y los ejecutables no tienen firma digital comercial. En el entorno local de desarrollo, Device Guard bloqueó una compilación anterior; no se desactivaron protecciones para probarla. Consulta [VERIFICACION.md](VERIFICACION.md) y las notas de cada release. Si tu organización bloquea la ejecución, pide al administrador que la revise.
 
@@ -34,6 +34,7 @@ La publicación inicial es preliminar y los ejecutables no tienen firma digital 
 - Copias de seguridad completas e importación de `.tablero` y `.excalidraw`.
 - Exportación editable `.tablero`, PNG, SVG y PDF.
 - Interfaz en español, inglés y chino simplificado, con preferencia de idioma persistente.
+- IA opcional para resumir texto seleccionado y proponer tareas, con claves propias de OpenAI, OpenRouter o Claude, vista previa editable e inserción como nuevas tarjetas.
 
 ## El editor
 
@@ -66,6 +67,12 @@ Elige **Configuración → Idioma de la aplicación**, o utiliza el selector del
 La interfaz y las plantillas nuevas se traducen. El texto de tus notas, los nombres de tableros existentes y tus plantillas personales conservan el idioma en el que los escribiste.
 
 ![Plantillas en chino simplificado](docs/images/idiomas.png)
+
+## Asistente de IA opcional
+
+La IA está desactivada por defecto. Configura tu proveedor, modelo y clave en **Configuración → Inteligencia artificial opcional**. En el editor, selecciona notas o textos y pulsa **Resumir y proponer tareas**. Revisa qué texto se enviará y pulsa **Enviar y analizar**; después puedes editar, descartar o insertar el resultado como nuevas tarjetas. Las notas originales se conservan.
+
+Las claves se cifran para el usuario de Windows y quedan fuera de la biblioteca sincronizada y los respaldos de tableros. El proveedor procesa el texto fuera del equipo y puede cobrar por la API; la aplicación no incluye créditos. Solo se analiza la selección, sin imágenes ni PDF. Consulta la [guía de IA, privacidad y límites](docs/IA.es.md). Las herramientas de pizarra siguen funcionando sin configurar IA.
 
 ## Guardado y copias de seguridad
 

@@ -23,3 +23,24 @@ body:has(.storage-notice) .editor-shell,body:has(.storage-notice) .app-shell{hei
 .library-settings .modal-shade{z-index:210}
 .editor-shell ~ .toast{bottom:100px}
 .editor-shell .save-state{display:flex}
+.ai-settings{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.ai-settings .field-label{margin-top:16px}
+.ai-settings .field-label input,.ai-settings .field-label select,.ai-assistant .field-label input{width:100%;min-width:0}
+.ai-settings-actions{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0}
+.ai-settings-actions button{font-size:12px;padding:10px 12px}
+.ai-enable{display:flex;align-items:center;gap:10px;margin:18px 0;font-size:13px;flex-wrap:wrap}
+.ai-enable input{accent-color:var(--green);width:17px;height:17px;flex-shrink:0}
+.ai-assistant{font-size:14px;line-height:1.6}
+.ai-error{padding:12px;border:1px solid #d79595;background:#fff0f0;color:#872d2d!important;border-radius:8px;font-size:13px;overflow-wrap:anywhere}
+.ai-callout{background:var(--soft);padding:15px;border-radius:10px;margin-bottom:18px}
+.ai-callout p{margin-bottom:12px}
+.ai-provider{display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap;color:var(--muted);overflow-wrap:anywhere}
+.ai-source-list{max-height:300px;overflow:auto;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:14px}
+.ai-source-list .field-label{margin:0 0 14px}
+.ai-source-list textarea{font-size:13px;resize:vertical}
+.ai-source-list .field-label:last-child{margin-bottom:0}
+.ai-task-list{display:grid;gap:14px;margin-bottom:24px}
+.ai-task{border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--surface2)}
+.ai-task .ai-enable{margin:0 0 10px}
+.ai-task-kind{font-size:11px;color:var(--green)}
+.ai-assistant .modal-actions{align-items:center;flex-wrap:wrap}

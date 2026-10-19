@@ -14,10 +14,10 @@ The app is available in Spanish, English and Simplified Chinese.
 
 1. Open [Releases](https://github.com/edwincsabo/TableroBlanco/releases).
 2. Expand **Assets** for the version you want to use.
-3. Download `TableroBlanco-1.3.0-Instalador.exe`, or the installer for that version. `Instalador` means installer; the filename is the same for every app language.
+3. Download `TableroBlanco-1.4.0-Instalador.exe`, or the installer for that version. `Instalador` means installer; the filename is the same for every app language.
 4. Close any running instance of TableroBlanco and run the installer. You can choose the installation folder and create shortcuts.
 
-To use the app without installing it, download `TableroBlanco-1.3.0-Portable.exe`. By default, boards are saved in your Windows user profile, including when using the portable version; you can choose another folder in Settings. You do not need Node.js, npm or Electron to use these executables.
+To use the app without installing it, download `TableroBlanco-1.4.0-Portable.exe`. By default, boards are saved in your Windows user profile, including when using the portable version; you can choose another folder in Settings. You do not need Node.js, npm or Electron to use these executables.
 
 The initial release is a prerelease, and the executables do not have a commercial digital signature. In the local development environment, Device Guard blocked an earlier build; protections were not disabled to test it. See [verification details (Spanish)](../VERIFICACION.md) and the notes for each release. If your organization blocks execution, ask your administrator to review the app.
 
@@ -34,6 +34,7 @@ The initial release is a prerelease, and the executables do not have a commercia
 - Full backups and import of `.tablero` and `.excalidraw` files.
 - Export to editable `.tablero`, PNG, SVG and PDF.
 - Spanish, English and Simplified Chinese interface, with a saved language preference.
+- Optional AI to summarize selected text and propose tasks using your own OpenAI, OpenRouter or Claude key, with editable previews and insertion as new cards.
 
 ## The editor
 
@@ -66,6 +67,12 @@ Choose **Settings → Application language**, or use the language selector in th
 The interface and new templates are translated. Text in your notes, existing board names and personal templates stays in the language in which you wrote it.
 
 ![Template picker in Simplified Chinese](images/idiomas.png)
+
+## Optional AI assistant
+
+AI is disabled by default. Configure your provider, model and key in **Settings → Optional artificial intelligence**. In the editor, select notes or text and click **Summarize and propose tasks**. Review what will be sent and choose **Send and analyze**, then edit, discard or insert the response as new cards. Original notes are preserved.
+
+Keys are encrypted for the Windows user and kept outside the synchronized library and board backups. The provider processes selected text outside your computer and may charge for API usage; the app does not include credits. Images and PDFs are not analyzed. See the [AI, privacy and limits guide](AI.en.md). Whiteboard tools continue working without AI configuration.
 
 ## Saving and backups
 

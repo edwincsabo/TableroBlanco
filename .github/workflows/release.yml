@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Etiqueta que coincide con package.json (por ejemplo v1.3.0)
+        description: Etiqueta que coincide con package.json (por ejemplo v1.4.0)
         required: true
-        default: v1.3.0
+        default: v1.4.0
         type: string
 
 permissions:
