@@ -1,8 +1,10 @@
 # TableroBlanco
 
+**Español** · [English](docs/README.en.md) · [简体中文](docs/README.zh-CN.md)
+
 Pizarra personal para Windows x64. Dibuja, organiza ideas, utiliza plantillas y anota documentos sin crear una cuenta ni depender de un servicio en la nube.
 
-**Español · English · 中文（简体）**
+La aplicación está disponible en español, inglés y chino simplificado.
 
 [Descargar para Windows](https://github.com/edwincsabo/TableroBlanco/releases) · [Guía de uso](docs/GUIA.md) · [Capturas de pantalla](docs/CAPTURAS.md) · [Licencia](LICENSE) · [Contribuir](CONTRIBUTING.md)
 
@@ -122,7 +124,7 @@ El código propio se publica bajo **TableroBlanco No-Sale License 1.0**:
 - Puedes cobrar por soporte, personalización, capacitación, consultoría o servicios de alojamiento.
 - No puedes vender el programa, sus licencias ni versiones modificadas que contengan su código.
 
-Lee [LICENSE](LICENSE) y el [resumen en español](docs/LICENCIA.es.md). Es una licencia propia de código disponible con restricción de venta, no una licencia de código abierto aprobada por la OSI. No reemplaza los permisos de versiones anteriores ni las licencias de terceros.
+Lee [LICENSE](LICENSE) y el [resumen en español](docs/LICENCIA.es.md). El texto oficial de la licencia está en inglés y prevalece sobre los resúmenes traducidos. Es una licencia propia de código disponible con restricción de venta, no una licencia de código abierto aprobada por la OSI. No reemplaza los permisos de versiones anteriores ni las licencias de terceros.
 
 ## Agradecimientos y componentes
 

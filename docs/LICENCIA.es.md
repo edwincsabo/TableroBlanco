@@ -1,5 +1,7 @@
 # Qué permite la licencia
 
+[Español](LICENCIA.es.md) · [English](LICENSE.en.md) · [简体中文](LICENSE.zh-CN.md)
+
 TableroBlanco usa una licencia propia: **TableroBlanco No-Sale License 1.0**. El texto vinculante está en [LICENSE](../LICENSE).
 
 | Actividad | Permitida |

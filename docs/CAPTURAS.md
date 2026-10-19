@@ -1,5 +1,7 @@
 # Capturas de TableroBlanco
 
+[Español](CAPTURAS.md) · [English](SCREENSHOTS.en.md) · [简体中文](SCREENSHOTS.zh-CN.md)
+
 Estas imágenes muestran la aplicación con datos de demostración. No contienen tableros personales. Las capturas de inicio, editor y tema oscuro corresponden a la versión 1.2.1.
 
 ## Pantalla principal
