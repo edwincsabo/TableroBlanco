@@ -14,3 +14,11 @@
 @media(max-width:700px){.template-browser,.modal .template-browser{grid-template-columns:1fr}.template-categories{position:static;flex-direction:row;flex-wrap:wrap;border-right:0;padding:0;gap:6px}.template-categories button{width:auto;padding:8px 10px}.template-categories hr,.template-local-note{display:none}.template-categories button>svg{width:14px}.template-results-header{align-items:flex-start}.template-results-header h2{font-size:19px}}
 .board-card:hover{transform:none}.board-card:has(.card-dropdown){z-index:60}
 .language-selector{display:flex;align-items:center;gap:10px;margin:13px 0;color:var(--muted);font-size:12px}.language-selector>span{flex:1}.language-selector select{max-width:180px;font-size:12px;padding:9px 10px}.language-compact{margin:0 8px 0 0;gap:6px}.language-compact select{max-width:122px;background:transparent;border-color:transparent;font-size:11px;padding:8px 3px}.language-compact svg{width:17px}.editor-panel .language-selector{flex-wrap:wrap}.editor-panel .language-selector select{width:100%;max-width:none}.editor-panel .language-selector>span{min-width:180px}[lang=zh-CN]{font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC","Segoe UI",sans-serif}@media(max-width:1100px){.editor-actions .language-compact>svg{display:none}.editor-actions .language-compact{margin:0}.editor-actions .language-compact select{max-width:105px}.board-name-input{width:165px}}
+/* Library location and external-change notices. */
+.library-path{font-family:Consolas,monospace;font-size:12px;overflow-wrap:anywhere;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:10px;user-select:text}
+.library-settings{margin-top:24px;border-top:1px solid var(--line)}
+.storage-notice{position:relative;z-index:100;padding:9px 18px;background:#fff2c7;color:#604b0b;border-bottom:1px solid #e0c66d;font-size:12px;line-height:1.5}
+body:has(.storage-notice) .editor-shell,body:has(.storage-notice) .app-shell{height:calc(100vh - 54px)}
+.library-settings button:disabled{opacity:.55;cursor:wait}
+.library-settings .modal-shade{z-index:210}
+.editor-shell ~ .toast{bottom:100px}

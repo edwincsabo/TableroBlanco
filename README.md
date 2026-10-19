@@ -14,10 +14,10 @@ La aplicación está disponible en español, inglés y chino simplificado.
 
 1. Abre [Releases](https://github.com/edwincsabo/TableroBlanco/releases).
 2. En la versión que quieras utilizar, despliega **Assets**.
-3. Descarga `TableroBlanco-1.2.1-Instalador.exe` o el instalador correspondiente a esa versión.
+3. Descarga `TableroBlanco-1.3.0-Instalador.exe` o el instalador correspondiente a esa versión.
 4. Cierra una instancia anterior de TableroBlanco y ejecuta el instalador. Puedes elegir la carpeta y crear accesos directos.
 
-Si prefieres utilizarla sin instalar, descarga `TableroBlanco-1.2.1-Portable.exe`. Los tableros se guardan en el perfil del usuario de Windows, también al usar la versión portable. No necesitas Node.js, npm ni Electron para utilizar estos ejecutables.
+Si prefieres utilizarla sin instalar, descarga `TableroBlanco-1.3.0-Portable.exe`. Por defecto, los tableros se guardan en el perfil del usuario de Windows, también al usar la versión portable; puedes elegir otra carpeta desde Configuración. No necesitas Node.js, npm ni Electron para utilizar estos ejecutables.
 
 La publicación inicial es preliminar y los ejecutables no tienen firma digital comercial. En el entorno local de desarrollo, Device Guard bloqueó una compilación anterior; no se desactivaron protecciones para probarla. Consulta [VERIFICACION.md](VERIFICACION.md) y las notas de cada release. Si tu organización bloquea la ejecución, pide al administrador que la revise.
 
@@ -30,6 +30,7 @@ La publicación inicial es preliminar y los ejecutables no tienen firma digital 
 - 57 plantillas en nueve categorías, búsqueda global, recomendaciones y plantillas personales.
 - Temporizador, búsqueda de texto, modo presentación, fondos y tema claro u oscuro.
 - Guardado automático, historial de versiones, favoritos, duplicación y papelera.
+- Carpeta de biblioteca configurable, compatible con clientes de OneDrive y Google Drive, con copias por conflicto y recuperación local.
 - Copias de seguridad completas e importación de `.tablero` y `.excalidraw`.
 - Exportación editable `.tablero`, PNG, SVG y PDF.
 - Interfaz en español, inglés y chino simplificado, con preferencia de idioma persistente.
@@ -72,13 +73,17 @@ Los tableros se guardan automáticamente en el equipo. Abre su ubicación exacta
 
 En Configuración puedes crear una copia completa en JSON y restaurarla en otro equipo. La restauración crea copias y conserva los tableros existentes. Las copias completas no incluyen las instantáneas del historial.
 
-Conserva un respaldo antes de actualizar o trasladar el perfil. La aplicación no sincroniza archivos entre dispositivos.
+Desde **Configuración → Ubicación de los tableros → Cambiar carpeta** puedes elegir una carpeta dedicada dentro de OneDrive, Google Drive u otro cliente de sincronización instalado. La aplicación copia y verifica los tableros y su historial, conserva los archivos originales y crea un respaldo local antes de activar la nueva carpeta. En otro equipo, selecciona la misma biblioteca sincronizada.
+
+Los cambios que llegan a la carpeta actualizan la biblioteca; un tablero abierto no se reemplaza. Si su versión cambió, el siguiente guardado conserva los cambios locales como una copia separada. No se combinan dibujos automáticamente. Mantén la carpeta disponible sin conexión y espera al proveedor antes de cambiar de equipo. **Guardado en la carpeta** no confirma que haya terminado la subida.
+
+Consulta la [guía de carpetas sincronizadas y recuperación](docs/SINCRONIZACION.md). Conserva un respaldo independiente antes de actualizar o trasladar el perfil.
 
 ## Alcance
 
 TableroBlanco es una aplicación independiente, sin afiliación con Microsoft. Está orientada al uso personal y local. No reproduce todas las funciones de Microsoft Whiteboard.
 
-No incluye cuentas, colaboración simultánea, OneDrive, Teams, Loop, Copilot ni importación del formato propietario `.whiteboard`. Los PDF se insertan como imágenes; las tablas y listas son composiciones del lienzo. El reconocimiento de tinta se limita a círculos y rectángulos cerrados. Los GIF se utilizan como imágenes estáticas.
+No incluye cuentas propias, colaboración simultánea, conexión directa a las API de OneDrive o Drive, Teams, Loop, Copilot ni importación del formato propietario `.whiteboard`. La sincronización opcional depende del cliente externo instalado y de su cuenta. Los PDF se insertan como imágenes; las tablas y listas son composiciones del lienzo. El reconocimiento de tinta se limita a círculos y rectángulos cerrados. Los GIF se utilizan como imágenes estáticas.
 
 ## Código fuente y desarrollo
 

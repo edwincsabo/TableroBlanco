@@ -37,7 +37,7 @@ test('flujo Windows: crear, editar, guardar, reiniciar y recuperar un tablero si
   await reopened.getByRole('button',{name:'Guardar como plantilla',exact:true}).click();await expect(reopened.getByRole('status').filter({hasText:'Plantilla guardada'})).toBeVisible();
   await reopened.getByRole('button',{name:'Cerrar panel',exact:true}).click();
   await reopened.getByRole('button',{name:'Volver a mis tableros',exact:true}).click();
-  await reopened.getByRole('button',{name:'Plantillas',exact:true}).click();await reopened.getByRole('button',{name:'Categoría Mis plantillas',exact:true}).click();await expect(reopened.getByText('Mi plantilla',{exact:true})).toBeVisible();
+  await expect(reopened.getByRole('button',{name:'Abrir Proyecto de prueba',exact:true})).toBeVisible();await reopened.getByRole('button',{name:'Plantillas',exact:true}).click();await reopened.getByRole('button',{name:'Categoría Mis plantillas',exact:true}).click();await expect(reopened.getByText('Mi plantilla',{exact:true})).toBeVisible();
   await next.close();assertNoErrors(errors);
 });
 function assertNoErrors(errors:string[]){expect(errors).toEqual([])}

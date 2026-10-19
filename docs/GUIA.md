@@ -1,13 +1,13 @@
-# TableroBlanco 1.2.1
+# TableroBlanco 1.3.0
 
 Aplicación de pizarra personal para Windows x64. Funciona sin cuentas, sin servidor y sin conexión. Los tableros se guardan en el equipo. Es una alternativa independiente inspirada en los flujos de trabajo de Whiteboard; no es un producto de Microsoft ni una reproducción idéntica.
 
 ## Abrir la aplicación
 
-En `version-final/1.2.1`:
+En `version-final/1.3.0`:
 
-- `TableroBlanco-1.2.1-Instalador.exe`: instala para el usuario actual, permite elegir carpeta y crea accesos en Inicio y el escritorio.
-- `TableroBlanco-1.2.1-Portable.exe`: ejecuta la aplicación sin instalarla. Los datos también se guardan en el perfil del usuario, no junto al ejecutable.
+- `TableroBlanco-1.3.0-Instalador.exe`: instala para el usuario actual, permite elegir carpeta y crea accesos en Inicio y el escritorio.
+- `TableroBlanco-1.3.0-Portable.exe`: ejecuta la aplicación sin instalarla. Los datos se guardan en el perfil del usuario o en la biblioteca elegida en Configuración, no junto al ejecutable.
 - `win-unpacked/TableroBlanco.exe`: versión ya extraída. Conserva toda la carpeta `win-unpacked` si la trasladas.
 
 No necesitas instalar Node.js, npm, Electron ni un navegador para usar los ejecutables. Son compilaciones sin firma digital comercial; Windows puede mostrar el editor como desconocido.
@@ -68,7 +68,7 @@ Los diseños son propios e inspirados en estructuras de trabajo conocidas y en l
 
 Los cambios se guardan tras una pausa de aproximadamente 800 ms. La aplicación espera a que termine el guardado al cerrar la ventana. Si el disco falla, muestra un aviso y mantiene la ventana abierta para que puedas exportar una copia.
 
-Los tableros se almacenan en `%APPDATA%\tableroblanco\tableros`. La ubicación exacta puede abrirse en **Configuración → Abrir carpeta de tableros**. Los archivos JSON se escriben primero en un temporal y se reemplazan de forma atómica, con sincronización del archivo y reintentos ante bloqueos transitorios.
+Por defecto, los tableros se almacenan en `%APPDATA%\tableroblanco\tableros`. Puedes elegir otra ubicación desde **Configuración → Ubicación de los tableros → Cambiar carpeta**. Consulta la [guía de sincronización y recuperación](SINCRONIZACION.md). La ubicación exacta puede abrirse en **Configuración → Abrir carpeta de tableros**. Los archivos JSON se escriben primero en un temporal y se reemplazan de forma atómica, con sincronización del archivo y reintentos ante bloqueos transitorios.
 
 Mientras guardas cambios, se conserva una versión anterior cada cinco minutos, hasta veinte instantáneas automáticas por tablero. En **Opciones del tablero → Historial de versiones** puedes restaurarla. Antes de restaurar se conserva también una instantánea del estado actual. El historial no reemplaza una copia de seguridad externa.
 
@@ -91,7 +91,7 @@ En la biblioteca, **Configuración → Crear copia de seguridad completa** expor
 
 ## Alcance de esta versión
 
-Se implementó el uso personal, local y sin cuentas solicitado. No incluye colaboración simultánea, servicios en la nube, OneDrive, Teams, Microsoft Loop, Copilot ni inicio de sesión. No abre el formato propietario `.whiteboard` ni recupera contenido eliminado por Microsoft. Las imágenes previamente exportadas desde Whiteboard se pueden insertar como imágenes, sin recuperar los objetos originales editables.
+Se implementó el uso personal, local y sin cuentas solicitado. Permite elegir una carpeta sincronizada por el cliente de OneDrive, Google Drive u otro proveedor instalado. No incluye colaboración simultánea, conexión directa a servicios de nube, Teams, Microsoft Loop, Copilot ni inicio de sesión propio. No abre el formato propietario `.whiteboard` ni recupera contenido eliminado por Microsoft. Las imágenes previamente exportadas desde Whiteboard se pueden insertar como imágenes, sin recuperar los objetos originales editables.
 
 El objetivo es cubrir las herramientas personales de pizarra descritas arriba. No se certifica equivalencia completa con todas las versiones y funciones de Microsoft Whiteboard. El comportamiento táctil y de presión depende del dispositivo; las pruebas automáticas de esta entrega utilizan ratón y teclado.
 
@@ -119,4 +119,4 @@ La aplicación utiliza React, TypeScript, Vite, Electron, Excalidraw, PDF.js y j
 
 ## Licencia de esta publicación
 
-Consulta [LICENSE](../LICENSE) y [el resumen de uso permitido](LICENCIA.es.md). La licencia específica de la publicación 1.2.1 permite servicios comerciales y prohíbe vender el programa. Los componentes de terceros conservan sus licencias propias.
+Consulta [LICENSE](../LICENSE) y [el resumen de uso permitido](LICENCIA.es.md). La licencia utilizada desde la publicación 1.2.1 permite servicios comerciales y prohíbe vender el programa. Los componentes de terceros conservan sus licencias propias.

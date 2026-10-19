@@ -1,6 +1,6 @@
 import {t as tr} from './i18n';
 import {get,set,del,keys} from 'idb-keyval';
-import type {Board,Scene} from './types';
+import type {Board,Scene,SaveResult} from './types';
 export const blankScene = ():Scene => ({elements:[],appState:{viewBackgroundColor:'#ffffff',gridSize:null},files:{}});
 export const createBoard = (name=tr("Tablero sin título"),scene=blankScene(),isTemplate=false):Board => ({id:crypto.randomUUID(),name,created:Date.now(),updated:Date.now(),favorite:false,deleted:false,isTemplate,scene});
 export const storage = {
@@ -9,8 +9,8 @@ export const storage = {
     const boardKeys=(await keys()).filter(k=>String(k).startsWith('board:'));
     return {boards:(await Promise.all(boardKeys.map(k=>get<Board>(k)))).filter(Boolean) as Board[],errors:[]};
   },
-  async save(board:Board) {if(window.desktop)await window.desktop.save(board);else await set(`board:${board.id}`,board);},
-  async remove(id:string){if(window.desktop)await window.desktop.remove(id);else await del(`board:${id}`);}
+  async save(board:Board):Promise<SaveResult> {if(window.desktop)return window.desktop.save(board);await set(`board:${board.id}`,board);return {board,conflict:false};},
+  async remove(id:string,revision?:string){if(window.desktop)await window.desktop.remove(id,revision);else await del(`board:${id}`);}
 };
 export function parseBoard(data:string):Board {
   const value=JSON.parse(data);

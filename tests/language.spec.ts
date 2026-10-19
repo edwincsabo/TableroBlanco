@@ -3,7 +3,7 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 const apps:any[]=[];
 test.afterEach(async()=>{for(const app of apps.splice(0))await app.close().catch(()=>{});});
-async function start(folder:string){const app=await electron.launch({args:['.'],env:{...process.env,TABLERO_TEST_DATA:folder,ELECTRON_RUN_AS_NODE:undefined} as any});apps.push(app);return {app,page:await app.firstWindow()};}
+async function start(folder:string){const app=await electron.launch({...(process.env.TABLERO_EXECUTABLE?{executablePath:process.env.TABLERO_EXECUTABLE,args:[]}:{args:['.']}),env:{...process.env,TABLERO_TEST_DATA:folder,ELECTRON_RUN_AS_NODE:undefined} as any});apps.push(app);return {app,page:await app.firstWindow()};}
 test('selector de tres idiomas, catálogo traducido, preferencia persistente y contenido intacto',async()=>{
   const folder=path.resolve('.local-test',`language-${Date.now()}`);await fs.mkdir(folder,{recursive:true});
   const {app,page}=await start(folder);const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));

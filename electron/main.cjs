@@ -2,7 +2,8 @@ const { app, BrowserWindow, ipcMain, dialog, shell, protocol, net, Menu } = requ
 const path = require('node:path');
 const fs = require('node:fs/promises');
 const { pathToFileURL } = require('node:url');
-const { createStore } = require('./storage.cjs');
+const { createLibrary } = require('./library.cjs');
+const { randomUUID } = require('node:crypto');
 const messages = require('../shared/ui.json');
 let language = 'es';
 function translate(text) { return language === 'es' ? text : messages[text]?.[language === 'en' ? 0 : 1] || text; }
@@ -22,8 +23,10 @@ async function openDocument(file) {
   catch (e) { dialog.showErrorBox(translate('No se pudo abrir el tablero'), e.message); }
 }
 app.whenReady().then(async () => {
-  const root = path.join(app.getPath('userData'), 'tableros');
-  const store = createStore(root);
+  let library; let initializationError; let folderProposal = null;
+  try { library = await createLibrary(app.getPath('userData'), translate); }
+  catch (error) { initializationError = error; }
+  const store = () => { if (!library) throw initializationError; return library; };
   ipcMain.handle('app:language', (_event, locale) => { if (['es','en','zh-CN'].includes(locale)) language = locale; });
   protocol.handle('tablero', request => {
     const url = new URL(request.url);
@@ -34,13 +37,31 @@ app.whenReady().then(async () => {
     if (url.host !== 'app' || !target.startsWith(base + path.sep)) return new Response('No permitido', {status:403});
     return net.fetch(pathToFileURL(target).toString());
   });
-  ipcMain.handle('boards:list', () => store.list());
-  ipcMain.handle('boards:save', (_event, board) => store.save(board));
-  ipcMain.handle('boards:remove', (_event, id) => store.remove(id));
-  ipcMain.handle('boards:history', (_event, id) => store.history(id));
-  ipcMain.handle('boards:readHistory', (_event, id, version) => store.readHistory(id, version));
-  ipcMain.handle('boards:snapshot', (_event, board) => store.snapshot(board));
-  ipcMain.handle('app:dataFolder', () => shell.openPath(root));
+  ipcMain.handle('boards:list', () => store().list());
+  ipcMain.handle('boards:save', (_event, board) => store().save(board));
+  ipcMain.handle('boards:remove', (_event, id, revision) => store().remove(id, revision));
+  ipcMain.handle('boards:history', (_event, id) => store().history(id));
+  ipcMain.handle('boards:readHistory', (_event, id, version) => store().readHistory(id, version));
+  ipcMain.handle('boards:snapshot', (_event, board) => store().snapshot(board));
+  ipcMain.handle('app:dataFolder', () => shell.openPath(store().info().path));
+  ipcMain.handle('library:info', () => store().info());
+  ipcMain.handle('library:recovery', async () => {
+    const recovery = library ? library.info().recoveryPath : path.join(app.getPath('userData'), 'recuperacion');
+    await fs.mkdir(recovery, { recursive: true }); return shell.openPath(recovery);
+  });
+  ipcMain.handle('library:choose', async () => {
+    folderProposal = null;
+    const result = await dialog.showOpenDialog(window, { title: translate('Seleccionar carpeta de tableros'), buttonLabel: translate('Usar esta carpeta'), defaultPath: store().info().path, properties: ['openDirectory', 'createDirectory'] });
+    if (result.canceled || !result.filePaths[0]) return null;
+    const proposal = await store().prepare(result.filePaths[0]);
+    folderProposal = { ...proposal, token: randomUUID() }; return folderProposal;
+  });
+  ipcMain.handle('library:change', async (_event, token) => {
+    if (!folderProposal || token !== folderProposal.token) throw new Error(translate('Vuelve a seleccionar la carpeta.'));
+    const proposal = folderProposal; folderProposal = null;
+    const result = await store().change(proposal.path);
+    window.webContents.send('boards:changed'); return result;
+  });
   ipcMain.handle('file:save', async (_event, { name, data, kind }) => {
     const extensions = {tablero:['tablero'], json:['json'], png:['png'], svg:['svg'], pdf:['pdf']};
     if (!extensions[kind]) throw new Error(translate('Formato no admitido.'));
@@ -58,7 +79,7 @@ app.whenReady().then(async () => {
     const file = pendingOpen; pendingOpen = null;
     return file ? fs.readFile(file, 'utf8') : null;
   });
-  ipcMain.handle('app:closeReady', () => {closeApproved = true; window.close();});
+  ipcMain.handle('app:closeReady', async () => {await library?.idle().catch(()=>{});closeApproved = true; window.close();});
   ipcMain.handle('app:external', (_event, url) => { if (/^https?:\/\//i.test(url)) return shell.openExternal(url); });
   window = new BrowserWindow({width:1440,height:940,minWidth:1000,minHeight:680,backgroundColor:'#f7f9f8',title:'TableroBlanco',icon:path.join(__dirname,'../build/icon.ico'),webPreferences:{preload:path.join(__dirname,'preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true}});
   Menu.setApplicationMenu(null);
@@ -71,5 +92,19 @@ app.whenReady().then(async () => {
   window.on('close', event => {if (!closeApproved && !window.webContents.isDestroyed()) {event.preventDefault();window.webContents.send('app:closing');}});
   if (process.env.TABLERO_DEV) await window.loadURL('http://127.0.0.1:5173');
   else await window.loadURL('tablero://app/');
+  let signature = null; let checking = false;
+  const checkLibrary = async () => {
+    if (checking || window.isDestroyed() || !library) return;
+    checking = true;
+    try {
+      const current = await library.signature();
+      if (current !== signature) { signature = current; window.webContents.send('boards:changed'); }
+    } catch {
+      if (signature !== 'unavailable') { signature = 'unavailable'; window.webContents.send('boards:changed'); }
+    } finally { checking = false; }
+  };
+  const refreshTimer = setInterval(checkLibrary, 3000);
+  window.on('focus', checkLibrary);
+  window.on('closed', () => clearInterval(refreshTimer));
 });
 app.on('window-all-closed', () => app.quit());

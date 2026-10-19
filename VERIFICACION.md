@@ -1,35 +1,35 @@
-# Verificación de TableroBlanco 1.2.1
+# Verificación de TableroBlanco 1.3.0
 
-La primera publicación pública se compiló, probó y publicó mediante [GitHub Actions](https://github.com/edwincsabo/TableroBlanco/actions/runs/39057257658). La ejecución terminó correctamente el 17 de octubre de 2026; los enlaces de descarga se comprobaron el 18 de octubre de 2026.
+Versión con selección de carpeta para la biblioteca, migración verificada, detección de cambios externos, copias por conflicto y recuperación local. La revisión local se realizó el 18 de octubre de 2026 con perfiles de demostración, sin cambiar la ubicación de los tableros personales del usuario.
 
-## Entorno y resultados
+## Comprobación local
 
-- Entorno de GitHub: Windows Server 2025 x64, Node.js 24 y Electron 44.9.0.
-- Instalación de dependencias con `npm ci`: correcta.
-- Auditoría `npm audit --omit=dev --audit-level=high`: cero vulnerabilidades conocidas de producción en esa ejecución.
-- Almacenamiento y geometría: cuatro pruebas correctas.
-- Compilación TypeScript y Vite: correcta.
-- Interfaz con Electron oficial: siete pruebas correctas.
-- Empaquetado NSIS y portable: correcto.
-- Verificación posterior al empaquetado: siete casos correctos; seis utilizaron el ejecutable empaquetado y el caso de idiomas utilizó el runtime oficial de desarrollo.
-- Publicación de la release, la licencia y los hashes: correcta.
-- Enlaces públicos del instalador y del portable: HTTP 200. Los hashes de `SHA256SUMS.txt` coinciden con los digests publicados por GitHub.
+- TypeScript y compilación Vite: correctos.
+- Almacenamiento, migración y geometría: 12 pruebas correctas.
+- Interfaz con el runtime oficial de Electron: nueve pruebas correctas.
+- Auditoría de dependencias de producción: cero vulnerabilidades conocidas en la consulta realizada para esta versión.
+- Generación local del instalador NSIS y del portable para Windows x64: correcta.
+- Documentación en español, inglés y chino simplificado: enlaces locales y comandos de desarrollo comprobados.
 
-El informe completo de instalación también indicó ocho avisos moderados en dependencias de desarrollo. El resultado de cero corresponde a dependencias de producción; no se presenta como una auditoría total sin avisos ni como una certificación de seguridad.
+Los cambios en el lanzador de la prueba de idiomas permiten que también use el ejecutable empaquetado cuando se establece TABLERO_EXECUTABLE.
 
-## Cobertura funcional
+## Cobertura de la función de carpetas
 
-Las pruebas comprobaron guardados concurrentes, recuperación de versiones, rechazo de rutas inválidas, conservación de archivos dañados y reconocimiento de formas. En la interfaz se verificaron creación y renombrado de tableros, notas, búsqueda, persistencia tras reiniciar, apertura de archivos, cierre con cambios pendientes, favoritos, plantillas, resaltador, temporizador, copias de seguridad y papelera.
+Las pruebas comprobaron copia de tableros e historial, conservación del origen, unión con una biblioteca de destino, conflictos de identificadores, persistencia de la ubicación tras reiniciar, revisión obsoleta, borrado externo, carpeta desconectada, recuperación local y conservación de archivos ilegibles. También verificaron que las carpetas solapadas se rechazan, que una configuración dañada no activa otra biblioteca y que un fallo al confirmar la configuración mantiene el origen activo.
 
-También se comprobaron imágenes, dos páginas PDF, exportaciones `.tablero`, PNG, SVG y PDF, reimportación editable, 57 diseños con identificadores únicos, nueve categorías y conservación del contenido al insertar otra plantilla. El caso de idiomas comprobó español, inglés y chino simplificado, preferencia persistente, textos de las 57 plantillas en chino y preservación del contenido escrito por el usuario.
+En la interfaz se comprobaron selección y confirmación de carpeta, cancelación sin cambios, aviso de modificación externa sin reemplazar el lienzo, creación de una copia por conflicto, continuación de la edición en esa copia, llegada de un tablero externo, desconexión y reconexión y los controles en inglés y chino. Se conservaron las pruebas de dibujo, notas, plantillas, exportación, PDF, copias de seguridad y recuperación tras reiniciar.
+
+## Paquete publicado
+
+La comprobación del paquete y la publicación en GitHub Actions están pendientes en el momento de este informe. Se actualizará esta sección con el resultado del flujo de la versión 1.3.0. No se presenta la generación local como una prueba de ejecución del binario.
 
 ## Límites
 
-Los ejecutables no tienen firma digital comercial. Una política de Device Guard bloqueó anteriormente una compilación local; no se modificó esa política. Las pruebas posteriores del binario se realizaron en el entorno de GitHub, donde la ejecución estaba permitida.
+Los cambios de otros equipos y la desconexión se simularon mediante archivos y carpetas locales. No se inició sesión en cuentas personales ni se certificó una transferencia real con OneDrive, Google Drive u otro proveedor. El cliente externo debe permitir lectura y escritura normal, tener permisos y espacio suficiente y mantener la carpeta disponible sin conexión.
 
-No se ejecutó el asistente de instalación sobre el perfil personal del usuario ni se comprobaron todos los equipos Windows, dispositivos táctiles o lápices digitales. Las pruebas automáticas utilizan ratón y teclado. La revisión lingüística no fue realizada por un asesor externo.
+La comprobación de revisiones reduce sobrescrituras, pero no constituye un bloqueo distribuido ni una combinación automática de dibujos. No se garantiza resolver todas las carreras entre clientes de sincronización. El indicador de guardado confirma una escritura local y no el fin de una subida a la nube.
 
-La publicación permanece marcada como preliminar. El resultado correcto en GitHub no garantiza que el software sea admitido por la política de seguridad de otra organización.
+Los ejecutables no tienen firma digital comercial. Una política de Device Guard bloqueó una compilación local anterior; no se modificaron las protecciones del equipo. No se ejecutó el instalador sobre el perfil personal ni se verificaron todos los dispositivos táctiles o lápices digitales. La revisión lingüística no fue realizada por un asesor externo.
 
 ## Repetir las pruebas
 
@@ -41,4 +41,4 @@ npm run test:ui
 npm run dist
 ```
 
-Los casos compatibles con un paquete admiten `TABLERO_EXECUTABLE` con su ruta. No desactives protecciones para probarlo. El [informe anterior](docs/VERIFICACION-ANTERIOR.md) conserva el contexto de las primeras entregas locales.
+Las pruebas de interfaz aceptan TABLERO_EXECUTABLE con la ruta al ejecutable extraído. El [informe de la versión 1.2.1](docs/VERIFICACION-1.2.1.md) conserva la verificación de la primera publicación pública.

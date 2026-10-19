@@ -14,10 +14,10 @@ The app is available in Spanish, English and Simplified Chinese.
 
 1. Open [Releases](https://github.com/edwincsabo/TableroBlanco/releases).
 2. Expand **Assets** for the version you want to use.
-3. Download `TableroBlanco-1.2.1-Instalador.exe`, or the installer for that version. `Instalador` means installer; the filename is the same for every app language.
+3. Download `TableroBlanco-1.3.0-Instalador.exe`, or the installer for that version. `Instalador` means installer; the filename is the same for every app language.
 4. Close any running instance of TableroBlanco and run the installer. You can choose the installation folder and create shortcuts.
 
-To use the app without installing it, download `TableroBlanco-1.2.1-Portable.exe`. Boards are saved in your Windows user profile, including when using the portable version. You do not need Node.js, npm or Electron to use these executables.
+To use the app without installing it, download `TableroBlanco-1.3.0-Portable.exe`. By default, boards are saved in your Windows user profile, including when using the portable version; you can choose another folder in Settings. You do not need Node.js, npm or Electron to use these executables.
 
 The initial release is a prerelease, and the executables do not have a commercial digital signature. In the local development environment, Device Guard blocked an earlier build; protections were not disabled to test it. See [verification details (Spanish)](../VERIFICACION.md) and the notes for each release. If your organization blocks execution, ask your administrator to review the app.
 
@@ -30,6 +30,7 @@ The initial release is a prerelease, and the executables do not have a commercia
 - 57 templates in nine categories, global template search, recommendations and personal templates.
 - Timer, text search, presentation mode, backgrounds, light and dark themes.
 - Autosave, version history, favorites, duplication and trash.
+- Configurable library folder for OneDrive and Google Drive desktop clients, with conflict copies and local recovery.
 - Full backups and import of `.tablero` and `.excalidraw` files.
 - Export to editable `.tablero`, PNG, SVG and PDF.
 - Spanish, English and Simplified Chinese interface, with a saved language preference.
@@ -72,13 +73,17 @@ Boards are saved automatically on your computer. Open their exact location throu
 
 In Settings, you can create a full JSON backup and restore it on another computer. Restoring creates copies and keeps existing boards. Full backups do not include version-history snapshots.
 
-Keep a backup before updating or moving your profile. The app does not sync files between devices.
+Use **Settings → Boards location → Change folder** to select a dedicated folder within OneDrive, Google Drive or another installed sync client. The app copies and verifies boards and their history, keeps the original files and creates a local backup before activating the new folder. On another computer, select the same synchronized library.
+
+Changes arriving in the folder refresh the library; an open board is not replaced. If its stored version changed, the next save keeps local changes in a separate copy. Drawings are not merged automatically. Keep the folder available offline and wait for the provider before switching computers. **Saved in the folder** does not confirm that uploading has finished.
+
+See the [synchronized folders and recovery guide](SYNC.en.md). Keep an independent backup before updating or moving your profile.
 
 ## Scope
 
 TableroBlanco is an independent app with no affiliation with Microsoft. It is designed for personal, local use. It does not reproduce every Microsoft Whiteboard feature.
 
-It does not include accounts, real-time collaboration, OneDrive, Teams, Loop, Copilot or import of the proprietary `.whiteboard` format. PDF pages are inserted as images; tables and lists are canvas compositions. Ink recognition is limited to closed circles and rectangles. GIFs are used as static images.
+It does not include app accounts, real-time collaboration, direct OneDrive or Drive API connections, Teams, Loop, Copilot or import of the proprietary `.whiteboard` format. Optional synchronization depends on an installed external client and its account. PDF pages are inserted as images; tables and lists are canvas compositions. Ink recognition is limited to closed circles and rectangles. GIFs are used as static images.
 
 ## Source code and development
 
