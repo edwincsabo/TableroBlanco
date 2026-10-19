@@ -11,7 +11,7 @@ Versión con selección de carpeta para la biblioteca, migración verificada, de
 - Generación local del instalador NSIS y del portable para Windows x64: correcta.
 - Documentación en español, inglés y chino simplificado: enlaces locales y comandos de desarrollo comprobados.
 
-Los cambios en el lanzador de la prueba de idiomas permiten que también use el ejecutable empaquetado cuando se establece TABLERO_EXECUTABLE.
+Las pruebas de carpeta sincronizada también se ejecutan con una ventana estrecha, comprobando que el indicador de guardado sigue visible. La prueba de idiomas respeta TABLERO_EXECUTABLE, igual que los otros casos.
 
 ## Cobertura de la función de carpetas
 
@@ -21,7 +21,17 @@ En la interfaz se comprobaron selección y confirmación de carpeta, cancelació
 
 ## Paquete publicado
 
-La comprobación del paquete y la publicación en GitHub Actions están pendientes en el momento de este informe. Se actualizará esta sección con el resultado del flujo de la versión 1.3.0. No se presenta la generación local como una prueba de ejecución del binario.
+La [ejecución final de GitHub Actions](https://github.com/edwincsabo/TableroBlanco/actions/runs/39193858185) terminó correctamente el 18 de octubre de 2026 en horario de Colombia (19 de octubre en UTC), con el código del commit `387ed8ffba4eb76d6d2294ecf5bb90b6e0964545`.
+
+- Dependencias de producción: cero vulnerabilidades conocidas en la auditoría de esa ejecución.
+- Almacenamiento, migración y geometría: 12 pruebas correctas.
+- Interfaz con Electron oficial: nueve pruebas correctas.
+- Empaquetado del instalador y del portable: correcto.
+- Interfaz con el ejecutable empaquetado: nueve pruebas correctas, incluida la selección de carpeta y los tres idiomas.
+- [Release v1.3.0](https://github.com/edwincsabo/TableroBlanco/releases/tag/v1.3.0): publicada como preliminar, con instalador, portable, licencia, avisos de terceros y hashes.
+- Descargas públicas del instalador y del portable: HTTP 200. Los valores de SHA256SUMS.txt coinciden con los digests de los archivos publicados por GitHub.
+
+Una ejecución anterior detectó que el diseño compacto ocultaba el indicador de guardado. Se corrigió y se repitió el flujo completo; el resultado indicado corresponde a la ejecución final.
 
 ## Límites
 
