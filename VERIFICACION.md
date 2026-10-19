@@ -12,7 +12,19 @@ Versión con IA opcional para resumir texto seleccionado y proponer tareas media
 
 Un bloqueo temporal del servicio de revisión automática impidió los primeros intentos de ejecutar Electron. Tras reintentarlo por la misma vía autorizada, la suite local completa terminó correctamente. No se eludieron revisiones ni se modificaron las protecciones del equipo.
 
-La comprobación de interfaz y del ejecutable empaquetado se realizará en el flujo de GitHub Actions antes de publicar las descargas. Este informe se actualizará con su resultado. No se presenta una respuesta simulada como una llamada real al proveedor.
+## Verificación y publicación en GitHub
+
+La [ejecución de GitHub Actions](https://github.com/edwincsabo/TableroBlanco/actions/runs/39198809878) terminó correctamente con el código del commit `103e65eecd30483825c9565084af6f22fc8e5832`:
+
+- Auditoría de dependencias de producción: cero vulnerabilidades conocidas en esa ejecución.
+- Lógica, almacenamiento e IA: 27 pruebas correctas.
+- Interfaz con Electron oficial: 11 pruebas correctas.
+- Generación del instalador y del portable: correcta.
+- Interfaz con el ejecutable empaquetado: 11 pruebas correctas, incluidas las de IA con solicitudes simuladas.
+- [Release v1.4.0](https://github.com/edwincsabo/TableroBlanco/releases/tag/v1.4.0): publicada como preliminar con los ejecutables, licencia, avisos de terceros y hashes.
+- Descargas públicas del instalador y portable: HTTP 200. SHA256SUMS.txt coincide con los digests publicados por GitHub.
+
+Las pruebas se realizaron sin claves reales ni cargos de API. No se presenta una respuesta simulada como una llamada real al proveedor.
 
 ## Cobertura de IA
 
