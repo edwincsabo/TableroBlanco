@@ -22,3 +22,4 @@ body:has(.storage-notice) .editor-shell,body:has(.storage-notice) .app-shell{hei
 .library-settings button:disabled{opacity:.55;cursor:wait}
 .library-settings .modal-shade{z-index:210}
 .editor-shell ~ .toast{bottom:100px}
+.editor-shell .save-state{display:flex}

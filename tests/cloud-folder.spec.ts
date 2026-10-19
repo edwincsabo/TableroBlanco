@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import {randomUUID} from 'node:crypto';
 const applications:any[]=[];
 const launch=async(data:string)=>{
-  const app=await electron.launch({...(process.env.TABLERO_EXECUTABLE?{executablePath:process.env.TABLERO_EXECUTABLE,args:[]}:{args:['.']}),env:{...process.env,TABLERO_TEST_DATA:data,ELECTRON_RUN_AS_NODE:undefined} as any});applications.push(app);return {app,page:await app.firstWindow()};
+  const app=await electron.launch({...(process.env.TABLERO_EXECUTABLE?{executablePath:process.env.TABLERO_EXECUTABLE,args:[]}:{args:['.']}),env:{...process.env,TABLERO_TEST_DATA:data,ELECTRON_RUN_AS_NODE:undefined} as any});applications.push(app);const page=await app.firstWindow();await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].setSize(1050,850));return {app,page};
 };
 test.afterEach(async()=>{for(const app of applications.splice(0))await app.close().catch(()=>{})});
 async function boards(folder:string){return Promise.all((await fs.readdir(folder)).filter(n=>n.endsWith('.json')).map(async name=>({file:path.join(folder,name),board:JSON.parse(await fs.readFile(path.join(folder,name),'utf8'))})))}
